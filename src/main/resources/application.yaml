@@ -1,0 +1,30 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: auth-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/iam_db
+    username: postgres
+    password: 1234
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+jwt:
+  secret: FW7cinngzgetduqR5/4MknwdJpxKY0EePuQDNIZKHek=
+  expiration: 3600000 # 1 hour in milliseconds
+
+  rabbitmq:
+    host: localhost 
+    port: 5672
+    username: guest
+    password: guest
+
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
