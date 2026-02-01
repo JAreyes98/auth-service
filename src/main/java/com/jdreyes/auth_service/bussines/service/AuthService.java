@@ -1,5 +1,7 @@
 package com.jdreyes.auth_service.bussines.service;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,5 +72,17 @@ public class AuthService {
     public void deleteExternalApp(Long id) {
         externalAppRepository.deleteById(id);
         auditProducer.sendAuditLog("APP_DELETED", id.toString(), "App deleted with ID: " + id);
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public List<ServiceSecret> getAllExternalApps() {
+        return externalAppRepository.findAll();
+    }
+
+    public Optional<User> getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 }

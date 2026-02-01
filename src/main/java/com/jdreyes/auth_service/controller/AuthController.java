@@ -1,9 +1,12 @@
 package com.jdreyes.auth_service.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,5 +58,15 @@ public class AuthController {
     public ResponseEntity<Void> removeApp(@PathVariable Long id) {
         authService.deleteExternalApp(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/list/users")
+    public ResponseEntity<List<User>> getUsers() {
+        return ResponseEntity.ok(authService.getAllUsers());
+    }
+
+    @GetMapping("/list/apikeys")
+    public ResponseEntity<List<ServiceSecret>> getApiKeys() {
+        return ResponseEntity.ok(authService.getAllExternalApps());
     }
 }
