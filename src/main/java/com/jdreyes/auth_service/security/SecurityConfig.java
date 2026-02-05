@@ -41,14 +41,14 @@ public class SecurityConfig {
             }))
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll()
                 // .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll() 
                 // .requestMatchers("/api/v1/auth/login").permitAll()
                 // .requestMatchers("/api/v1/auth/list/users").authenticated() // Primero probemos solo con authenticated()
                 // .anyRequest().authenticated()
+                .anyRequest().permitAll()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            // .addFilterBefore(jwtAuthenticationFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(jwtAuthenticationFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
         
         return http.build();
     }
