@@ -33,21 +33,22 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(request -> {
                 var corsConfiguration = new org.springframework.web.cors.CorsConfiguration();
                 // Permitimos el localhost del host y opcionalmente "*" para debug
-                corsConfiguration.setAllowedOrigins(java.util.List.of("http://localhost:5173", "http://127.0.0.1:5173")); 
+                corsConfiguration.setAllowedOrigins(java.util.List.of("*")); 
                 corsConfiguration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                corsConfiguration.setAllowedHeaders(java.util.List.of("Authorization", "Content-Type", "X-Requested-With"));
-                corsConfiguration.setAllowCredentials(true); // Necesario si usas Cookies o Auth persistente
+                corsConfiguration.setAllowedHeaders(java.util.List.of("*"));
+                corsConfiguration.setAllowCredentials(true); 
                 return corsConfiguration;
             }))
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll() 
-                .requestMatchers("/api/v1/auth/login").permitAll()
-                .requestMatchers("/api/v1/auth/list/users").authenticated() // Primero probemos solo con authenticated()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
+                // .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll() 
+                // .requestMatchers("/api/v1/auth/login").permitAll()
+                // .requestMatchers("/api/v1/auth/list/users").authenticated() // Primero probemos solo con authenticated()
+                // .anyRequest().authenticated()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .addFilterBefore(jwtAuthenticationFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
+            // .addFilterBefore(jwtAuthenticationFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
         
         return http.build();
     }
