@@ -69,4 +69,10 @@ public class AuthController {
     public ResponseEntity<List<ServiceSecret>> getApiKeys() {
         return ResponseEntity.ok(authService.getAllExternalApps());
     }
+
+    
+    @GetMapping("/health")
+    public ResponseEntity<String> healResponseEntity() {
+        return ResponseEntity.ok("Service is healthy");
+    }
 }
